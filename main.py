@@ -5,22 +5,25 @@ def create_client(client_name):
     global clients
     
     if client_name not in clients:
-        clients += client_name
-        _add_comma()
+        clients.append(client_name)
+
     else:
         print('Client already is in the client\'s list')
 
 
 def list_clients():
     global clients
-    print(clients)
+    
+    for idx, client in enumerate(clients):
+        print('{} : {}'.format(idx, client))
 
 
 def update_client(client_name, updated_client_name):
     global clients
 
     if client_name in clients:
-        clients = clients.replace(client_name + ',', updated_client_name + ',')
+        client_index = clients.index(client_name)
+        clients[client_index] = updated_client_name
     else:
         print('Client is not in clients list')
 
@@ -29,7 +32,8 @@ def delete_client(client_name):
     global clients
     
     if client_name in clients:
-        clients = clients.replace(client_name + ',', '')
+        clients.remove(client_name)
+        return
     else:
         print('Client is not in clients list')
 
@@ -37,18 +41,11 @@ def delete_client(client_name):
 def search_client(client_name):
     global clients
 
-    clients_list = clients.split(',')
-
-    for client in clients_list:
+    for client in clients:
         if client != client_name:
             continue
         else:
             return True
-
-
-def _add_comma():
-    global clients
-    clients += ','
 
 
 def _get_client_name():
@@ -74,7 +71,7 @@ def _print_welcome():
     print('[D]elete client')
     print('[S]earch client')
 
-clients = 'Pablo,Ricardo,'
+clients = ['Pablo', 'Ricardo']
 
 if __name__ == '__main__':
     _print_welcome()
